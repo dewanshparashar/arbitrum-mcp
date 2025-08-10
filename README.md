@@ -1,5 +1,10 @@
 # Arbitrum MCP Server
 
+[![CI](https://github.com/dewanshparashar/arbitrum-mcp/workflows/CI/badge.svg)](https://github.com/dewanshparashar/arbitrum-mcp/actions)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Docker](https://img.shields.io/badge/docker-%230db7ed.svg?style=flat&logo=docker&logoColor=white)](https://hub.docker.com)
+[![TypeScript](https://img.shields.io/badge/typescript-%23007ACC.svg?style=flat&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+
 A Model Context Protocol (MCP) server for interfacing with Arbitrum Nitro nodes and chains in natural language. Monitor chain health, batch posting, assertions, and gas prices across all Arbitrum networks including core chains (Arbitrum One, Nova) and Orbit chains.
 
 ## Features
