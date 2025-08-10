@@ -152,7 +152,7 @@ graph TB
 
     subgraph "Data Sources"
         GitHub[GitHub Chain Data<br/>orbitChainsData.json]
-        ArbitrumSDK[@arbitrum/sdk<br/>Core Chains]
+        ArbitrumSDK["@arbitrum/sdk<br/>Core Chains"]
     end
 
     subgraph "Blockchain Networks"
