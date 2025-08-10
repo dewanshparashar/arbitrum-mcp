@@ -7,6 +7,12 @@
 
 A Model Context Protocol (MCP) server for interfacing with Arbitrum Nitro nodes and chains in natural language. Monitor chain health, batch posting, assertions, and gas prices across all Arbitrum networks including core chains (Arbitrum One, Nova) and Orbit chains.
 
+## Demo
+
+![Arbitrum MCP Server in Action](./docs/arbitrum-mcp-screenshot.png)
+
+*Monitor Arbitrum chains with natural language queries through any MCP-compatible client*
+
 ## Features
 
 ### Core Monitoring Tools
@@ -30,12 +36,6 @@ A Model Context Protocol (MCP) server for interfacing with Arbitrum Nitro nodes 
 - Debug and validation APIs
 - Maintenance operations
 - Timeboost express lanes
-
-## Demo
-
-![Arbitrum MCP Server in Action](./docs/arbitrum-mcp-screenshot.png)
-
-*Monitor Arbitrum chains with natural language queries through any MCP-compatible client*
 
 ## Usage Examples
 
