@@ -1,0 +1,40 @@
+{
+  "name": "arbitrum-mcp",
+  "version": "1.0.0",
+  "description": "MCP server for interfacing with the Arbitrum system (nodes, chains, accounts, ecosystem) in natural language",
+  "main": "dist/index.js",
+  "type": "module",
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "start": "node dist/index.js",
+    "test": "jest",
+    "docker:build": "docker build -t arbitrum-mcp .",
+    "docker:run": "docker run -it --rm arbitrum-mcp",
+    "docker:compose": "docker-compose up",
+    "docker:compose:build": "docker-compose up --build",
+    "docker:compose:down": "docker-compose down"
+  },
+  "dependencies": {
+    "@arbitrum/orbit-sdk": "^0.23.5",
+    "@modelcontextprotocol/sdk": "^0.6.0",
+    "axios": "^1.6.0",
+    "viem": "^1.21.4"
+  },
+  "devDependencies": {
+    "@types/jest": "^29.0.0",
+    "@types/node": "^20.0.0",
+    "jest": "^29.0.0",
+    "ts-jest": "^29.0.0",
+    "typescript": "^5.0.0"
+  },
+  "keywords": [
+    "mcp",
+    "arbitrum",
+    "nitro",
+    "blockchain",
+    "json-rpc"
+  ],
+  "author": "",
+  "license": "MIT"
+}

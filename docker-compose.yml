@@ -1,0 +1,20 @@
+version: '3.8'
+
+services:
+  arbitrum-mcp:
+    build: .
+    container_name: arbitrum-mcp-server
+    stdin_open: true
+    tty: true
+    restart: unless-stopped
+    environment:
+      - NODE_ENV=production
+    # Use stdio transport for MCP
+    command: ["node", "dist/index.js"]
+    # Optional: Add health check
+    healthcheck:
+      test: ["CMD", "node", "-e", "process.exit(0)"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
