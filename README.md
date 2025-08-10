@@ -26,62 +26,11 @@ A Model Context Protocol (MCP) server for interfacing with Arbitrum Nitro nodes 
 - Maintenance operations
 - Timeboost express lanes
 
-## Quick Start
+## Demo
 
-### Docker (Recommended)
+![Arbitrum MCP Server in Action](./docs/arbitrum-mcp-screenshot.png)
 
-The easiest way to run the MCP server with maximum client compatibility:
-
-```bash
-# Build and run
-npm run docker:compose:build
-
-# For MCP clients, use:
-docker run -i --rm arbitrum-mcp
-```
-
-### Direct Node.js
-
-```bash
-# Install dependencies
-npm install
-
-# Build
-npm run build
-
-# Run
-npm start
-```
-
-## MCP Client Configuration
-
-### Claude Desktop
-
-Add to your Claude Desktop configuration:
-
-```json
-{
-  "mcpServers": {
-    "arbitrum-mcp": {
-      "command": "docker",
-      "args": ["run", "-i", "--rm", "arbitrum-mcp"]
-    }
-  }
-}
-```
-
-### Cline/Claude Code
-
-```json
-{
-  "mcpServers": {
-    "arbitrum-mcp": {
-      "command": "docker",
-      "args": ["run", "-i", "--rm", "arbitrum-mcp"]
-    }
-  }
-}
-```
+*Monitor Arbitrum chains with natural language queries through any MCP-compatible client*
 
 ## Usage Examples
 
@@ -131,61 +80,7 @@ gas_status --chainName "Nova"
 - `get_transaction` / `get_transaction_receipt` - Transaction details
 - `is_contract` - Check if address is a contract
 
-## Architecture
 
-```mermaid
-graph TB
-    subgraph "MCP Client (Claude, etc.)"
-        Client[AI Assistant/Client]
-    end
-
-    subgraph "Arbitrum MCP Server"
-        MCP[MCP Protocol Handler]
-        ChainLookup[Chain Lookup Service]
-
-        subgraph "Client Services"
-            ArbitrumClient[Arbitrum Chain Client]
-            EthereumClient[Ethereum Account Client]
-            NitroClient[Nitro Node Client]
-        end
-    end
-
-    subgraph "Data Sources"
-        GitHub[GitHub Chain Data<br/>orbitChainsData.json]
-        ArbitrumSDK["@arbitrum/sdk<br/>Core Chains"]
-    end
-
-    subgraph "Blockchain Networks"
-        ArbOne[Arbitrum One<br/>Chain ID: 42161]
-        ArbNova[Arbitrum Nova<br/>Chain ID: 42170]
-        OrbitChains[Orbit Chains<br/>Xai, Base, etc.]
-        Ethereum[Ethereum Mainnet<br/>L1 Contracts]
-    end
-
-    Client <--> MCP
-    MCP --> ChainLookup
-    MCP --> ArbitrumClient
-    MCP --> EthereumClient
-    MCP --> NitroClient
-
-    ChainLookup --> GitHub
-    ChainLookup --> ArbitrumSDK
-
-    ArbitrumClient --> ArbOne
-    ArbitrumClient --> ArbNova
-    ArbitrumClient --> OrbitChains
-
-    EthereumClient --> Ethereum
-    NitroClient --> ArbOne
-    NitroClient --> ArbNova
-    NitroClient --> OrbitChains
-
-    style MCP fill:#e1f5fe
-    style ChainLookup fill:#f3e5f5
-    style ArbitrumClient fill:#e8f5e8
-    style EthereumClient fill:#fff3e0
-    style NitroClient fill:#fce4ec
-```
 
 ## Key Benefits
 
@@ -195,6 +90,63 @@ graph TB
 - **Real-Time Data** - Live blockchain data with automatic chain discovery
 - **Troubleshooting Ready** - Quick health checks for issue diagnosis
 - **Gas & Performance Tracking** - Monitor network congestion and costs
+
+## Setup & Installation
+
+### Docker (Recommended)
+
+The easiest way to run the MCP server with maximum client compatibility:
+
+```bash
+# Build and run
+npm run docker:compose:build
+
+# For MCP clients, use:
+docker run -i --rm arbitrum-mcp
+```
+
+### Direct Node.js
+
+```bash
+# Install dependencies
+npm install
+
+# Build
+npm run build
+
+# Run
+npm start
+```
+
+### MCP Client Configuration
+
+#### Claude Desktop
+
+Add to your Claude Desktop configuration:
+
+```json
+{
+  "mcpServers": {
+    "arbitrum-mcp": {
+      "command": "docker",
+      "args": ["run", "-i", "--rm", "arbitrum-mcp"]
+    }
+  }
+}
+```
+
+#### Cline/Claude Code
+
+```json
+{
+  "mcpServers": {
+    "arbitrum-mcp": {
+      "command": "docker",
+      "args": ["run", "-i", "--rm", "arbitrum-mcp"]
+    }
+  }
+}
+```
 
 ## Development
 
