@@ -1,6 +1,6 @@
 # Arbitrum MCP Server
 
-A Model Context Protocol (MCP) server for interfacing with Arbitrum Nitro nodes and chains in natural language. Perfect for PM and support teams to monitor chain health, batch posting, assertions, and gas prices.
+A Model Context Protocol (MCP) server for interfacing with Arbitrum Nitro nodes and chains in natural language. Monitor chain health, batch posting, assertions, and gas prices across all Arbitrum networks including core chains (Arbitrum One, Nova) and Orbit chains.
 
 ## Features
 
@@ -14,6 +14,8 @@ A Model Context Protocol (MCP) server for interfacing with Arbitrum Nitro nodes 
 
 ### Chain Support
 
+- **Core Arbitrum Chains** - Arbitrum One, Arbitrum Nova
+- **Orbit Chains** - All public Orbit chains (Xai, Base, etc.)
 - **Auto-Resolution** - Contract addresses resolved automatically from chain names
 
 ### Arbitrum Node APIs
@@ -83,8 +85,6 @@ Add to your Claude Desktop configuration:
 
 ## Usage Examples
 
-### For PM and Support Teams
-
 **"What is the current status of Xai?"**
 
 ```
@@ -137,28 +137,70 @@ assertion_status --chainName "Base"
 - `get_transaction` / `get_transaction_receipt` - Transaction details
 - `is_contract` - Check if address is a contract
 
+## Architecture
+
+```mermaid
+graph TB
+    subgraph "MCP Client (Claude, etc.)"
+        Client[AI Assistant/Client]
+    end
+    
+    subgraph "Arbitrum MCP Server"
+        MCP[MCP Protocol Handler]
+        ChainLookup[Chain Lookup Service]
+        
+        subgraph "Client Services"
+            ArbitrumClient[Arbitrum Chain Client]
+            EthereumClient[Ethereum Account Client]
+            NitroClient[Nitro Node Client]
+        end
+    end
+    
+    subgraph "Data Sources"
+        GitHub[GitHub Chain Data<br/>orbitChainsData.json]
+        ArbitrumSDK[@arbitrum/sdk<br/>Core Chains]
+    end
+    
+    subgraph "Blockchain Networks"
+        ArbOne[Arbitrum One<br/>Chain ID: 42161]
+        ArbNova[Arbitrum Nova<br/>Chain ID: 42170]
+        OrbitChains[Orbit Chains<br/>Xai, Base, etc.]
+        Ethereum[Ethereum Mainnet<br/>L1 Contracts]
+    end
+    
+    Client <--> MCP
+    MCP --> ChainLookup
+    MCP --> ArbitrumClient
+    MCP --> EthereumClient
+    MCP --> NitroClient
+    
+    ChainLookup --> GitHub
+    ChainLookup --> ArbitrumSDK
+    
+    ArbitrumClient --> ArbOne
+    ArbitrumClient --> ArbNova
+    ArbitrumClient --> OrbitChains
+    
+    EthereumClient --> Ethereum
+    NitroClient --> ArbOne
+    NitroClient --> ArbNova
+    NitroClient --> OrbitChains
+    
+    style MCP fill:#e1f5fe
+    style ChainLookup fill:#f3e5f5
+    style ArbitrumClient fill:#e8f5e8
+    style EthereumClient fill:#fff3e0
+    style NitroClient fill:#fce4ec
+```
+
 ## Key Benefits
 
-### For Product Managers
-
-- **Comprehensive Status Checks** - Get complete chain health in one query
-- **Chain Comparison** - Compare metrics across different Orbit chains
-- **Gas Monitoring** - Track network congestion and costs
-- **Uptime Monitoring** - Monitor batch posting frequency and assertion status
-
-### For Support Teams
-
-- **Troubleshooting** - Quick health checks for user-reported issues
-- **Incident Response** - Rapidly assess chain status during incidents
-- **Performance Monitoring** - Track key metrics like backlog and gas prices
+- **Comprehensive Monitoring** - Complete chain health overview in one query
 - **Multi-Chain Support** - Consistent interface across all Arbitrum chains
-
-### Data-Driven Approach
-
-- **No Health Judgments** - Returns raw data for you to interpret
-- **Configurable Thresholds** - Apply your own business logic
-- **Historical Context** - Time-based metrics for trend analysis
-- **Detailed Summaries** - Human-readable status descriptions
+- **Natural Language Interface** - Query blockchain data using plain English
+- **Real-Time Data** - Live blockchain data with automatic chain discovery
+- **Troubleshooting Ready** - Quick health checks for issue diagnosis
+- **Gas & Performance Tracking** - Monitor network congestion and costs
 
 ## Development
 
@@ -180,11 +222,11 @@ npm run dev
 
 See [DOCKER.md](DOCKER.md) for detailed Docker setup instructions.
 
-## Architecture
+## Technology Stack
 
 - **TypeScript** - Type-safe development
 - **Viem** - Ethereum client for blockchain interactions
-- **Orbit SDK** - Arbitrum-specific functionality
+- **@arbitrum/sdk** - Official Arbitrum SDK for core chain data
 - **MCP SDK** - Model Context Protocol implementation
 - **Docker** - Containerized deployment
 
