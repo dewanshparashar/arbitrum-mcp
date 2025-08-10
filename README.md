@@ -15,7 +15,7 @@ A Model Context Protocol (MCP) server for interfacing with Arbitrum Nitro nodes 
 ### Chain Support
 
 - **Core Arbitrum Chains** - Arbitrum One, Arbitrum Nova
-- **Orbit Chains** - All public Orbit chains (Xai, Base, etc.)
+- **Orbit Chains** - All public Orbit chains (Xai, Superposition, etc.)
 - **Auto-Resolution** - Contract addresses resolved automatically from chain names
 
 ### Arbitrum Node APIs
@@ -103,12 +103,6 @@ batch_posting_status --chainName "Arbitrum One"
 gas_status --chainName "Nova"
 ```
 
-**"What's the assertion status for Base?"**
-
-```
-assertion_status --chainName "Base"
-```
-
 ### Available Tools
 
 #### Monitoring Tools
@@ -144,48 +138,48 @@ graph TB
     subgraph "MCP Client (Claude, etc.)"
         Client[AI Assistant/Client]
     end
-    
+
     subgraph "Arbitrum MCP Server"
         MCP[MCP Protocol Handler]
         ChainLookup[Chain Lookup Service]
-        
+
         subgraph "Client Services"
             ArbitrumClient[Arbitrum Chain Client]
             EthereumClient[Ethereum Account Client]
             NitroClient[Nitro Node Client]
         end
     end
-    
+
     subgraph "Data Sources"
         GitHub[GitHub Chain Data<br/>orbitChainsData.json]
         ArbitrumSDK[@arbitrum/sdk<br/>Core Chains]
     end
-    
+
     subgraph "Blockchain Networks"
         ArbOne[Arbitrum One<br/>Chain ID: 42161]
         ArbNova[Arbitrum Nova<br/>Chain ID: 42170]
         OrbitChains[Orbit Chains<br/>Xai, Base, etc.]
         Ethereum[Ethereum Mainnet<br/>L1 Contracts]
     end
-    
+
     Client <--> MCP
     MCP --> ChainLookup
     MCP --> ArbitrumClient
     MCP --> EthereumClient
     MCP --> NitroClient
-    
+
     ChainLookup --> GitHub
     ChainLookup --> ArbitrumSDK
-    
+
     ArbitrumClient --> ArbOne
     ArbitrumClient --> ArbNova
     ArbitrumClient --> OrbitChains
-    
+
     EthereumClient --> Ethereum
     NitroClient --> ArbOne
     NitroClient --> ArbNova
     NitroClient --> OrbitChains
-    
+
     style MCP fill:#e1f5fe
     style ChainLookup fill:#f3e5f5
     style ArbitrumClient fill:#e8f5e8
