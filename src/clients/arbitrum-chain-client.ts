@@ -321,25 +321,42 @@ export class ArbitrumChainClient {
   }
 
   private async makeRpcCall(method: string, params: any[]): Promise<any> {
-    const response = await fetch(this.rpcUrl, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
+    try {
+      const requestBody = {
         jsonrpc: "2.0",
         id: Date.now(),
         method,
         params,
-      }),
-    });
+      };
 
-    const data = await response.json();
+      console.error(`Making RPC call to ${this.rpcUrl}: ${method}`);
+      
+      const response = await fetch(this.rpcUrl, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(requestBody),
+      });
 
-    if (data.error) {
-      throw new Error(`RPC Error: ${data.error.message}`);
+      if (!response.ok) {
+        throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+      }
+
+      const data = await response.json();
+
+      if (data.error) {
+        throw new Error(`RPC Error: ${data.error.message}`);
+      }
+
+      return data.result;
+    } catch (error) {
+      console.error(`RPC call failed for ${method} on ${this.rpcUrl}:`, error);
+      if (error instanceof Error) {
+        throw error;
+      } else {
+        throw new Error(`Unknown error during RPC call: ${String(error)}`);
+      }
     }
-
-    return data.result;
   }
 }

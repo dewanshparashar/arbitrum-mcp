@@ -173,6 +173,8 @@ npm run dev
 
 See [DOCKER.md](DOCKER.md) for detailed Docker setup instructions.
 
+**⚠️ Important:** When using Docker containers to connect to local testnodes, use `http://host.docker.internal:8547` instead of `http://127.0.0.1:8547` for the RPC URL.
+
 ## Technology Stack
 
 - **TypeScript** - Type-safe development

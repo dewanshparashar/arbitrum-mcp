@@ -97,6 +97,40 @@ npm run docker:compose:down  # Stop Docker Compose services
 - The MCP server uses STDIO, not network ports
 - No port mapping is required for MCP communication
 
+### Local testnode connectivity from Docker containers
+
+When using the MCP server from within Docker containers to connect to local testnodes, you cannot use `127.0.0.1` or `localhost` because these refer to the container's localhost, not the host machine.
+
+**❌ This will fail:**
+```json
+{
+  "rpcUrl": "http://127.0.0.1:8547"
+}
+```
+
+**✅ Use this instead:**
+```json
+{
+  "rpcUrl": "http://host.docker.internal:8547"
+}
+```
+
+**Common scenarios:**
+- **Arbitrum local testnode**: Use `http://host.docker.internal:8547`
+- **Local Ethereum node**: Use `http://host.docker.internal:8545`
+- **Local Hardhat node**: Use `http://host.docker.internal:8545`
+
+**Error symptoms:**
+- "MCP error -32603: fetch failed"
+- "Connection refused" errors
+- Tools timing out when trying to connect
+
+**Testing connectivity:**
+```bash
+# Test from inside container
+docker exec <container-name> wget -qO- --post-data='{"jsonrpc":"2.0","method":"eth_blockNumber","params":[],"id":1}' --header='Content-Type:application/json' http://host.docker.internal:8547
+```
+
 ### Building from source
 ```bash
 # Make sure to build TypeScript first
