@@ -103,11 +103,8 @@ gas_status --chainName "Nova"
 The easiest way to run the MCP server with maximum client compatibility:
 
 ```bash
-# Build and run
-npm run docker:compose:build
-
-# For MCP clients, use:
-docker run -i --rm arbitrum-mcp
+# Run directly from Docker Hub (no build required!)
+docker run -i --rm dewanshparashar/arbitrum-mcp
 ```
 
 ### Direct Node.js
@@ -134,7 +131,7 @@ Add to your Claude Desktop configuration:
   "mcpServers": {
     "arbitrum-mcp": {
       "command": "docker",
-      "args": ["run", "-i", "--rm", "arbitrum-mcp"]
+      "args": ["run", "-i", "--rm", "dewanshparashar/arbitrum-mcp"]
     }
   }
 }
@@ -147,7 +144,7 @@ Add to your Claude Desktop configuration:
   "mcpServers": {
     "arbitrum-mcp": {
       "command": "docker",
-      "args": ["run", "-i", "--rm", "arbitrum-mcp"]
+      "args": ["run", "-i", "--rm", "dewanshparashar/arbitrum-mcp"]
     }
   }
 }
