@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "MCP server for interfacing with the Arbitrum system (nodes, chains, accounts, ecosystem) in natural language",
   "main": "dist/index.js",
+  "bin": {
+    "arbitrum-mcp": "dist/index.js"
+  },
   "type": "module",
   "scripts": {
     "build": "tsc",
