@@ -105,12 +105,12 @@ export class ChainLookupService {
           rollup: arbOneNetwork.ethBridge.rollup,
           sequencerInbox: arbOneNetwork.ethBridge.sequencerInbox,
         },
-        parentCustomGateway: arbOneNetwork.tokenBridge?.parentCustomGateway,
-        parentErc20Gateway: arbOneNetwork.tokenBridge?.parentErc20Gateway,
-        parentGatewayRouter: arbOneNetwork.tokenBridge?.parentGatewayRouter,
-        childCustomGateway: arbOneNetwork.tokenBridge?.childCustomGateway,
-        childErc20Gateway: arbOneNetwork.tokenBridge?.childErc20Gateway,
-        childGatewayRouter: arbOneNetwork.tokenBridge?.childGatewayRouter,
+        parentCustomGateway: arbOneNetwork.tokenBridge && arbOneNetwork.tokenBridge.parentCustomGateway,
+        parentErc20Gateway: arbOneNetwork.tokenBridge && arbOneNetwork.tokenBridge.parentErc20Gateway,
+        parentGatewayRouter: arbOneNetwork.tokenBridge && arbOneNetwork.tokenBridge.parentGatewayRouter,
+        childCustomGateway: arbOneNetwork.tokenBridge && arbOneNetwork.tokenBridge.childCustomGateway,
+        childErc20Gateway: arbOneNetwork.tokenBridge && arbOneNetwork.tokenBridge.childErc20Gateway,
+        childGatewayRouter: arbOneNetwork.tokenBridge && arbOneNetwork.tokenBridge.childGatewayRouter,
       });
 
       // Add Arbitrum Nova
@@ -138,12 +138,12 @@ export class ChainLookupService {
           rollup: novaNetwork.ethBridge.rollup,
           sequencerInbox: novaNetwork.ethBridge.sequencerInbox,
         },
-        parentCustomGateway: novaNetwork.tokenBridge?.parentCustomGateway,
-        parentErc20Gateway: novaNetwork.tokenBridge?.parentErc20Gateway,
-        parentGatewayRouter: novaNetwork.tokenBridge?.parentGatewayRouter,
-        childCustomGateway: novaNetwork.tokenBridge?.childCustomGateway,
-        childErc20Gateway: novaNetwork.tokenBridge?.childErc20Gateway,
-        childGatewayRouter: novaNetwork.tokenBridge?.childGatewayRouter,
+        parentCustomGateway: novaNetwork.tokenBridge && novaNetwork.tokenBridge.parentCustomGateway,
+        parentErc20Gateway: novaNetwork.tokenBridge && novaNetwork.tokenBridge.parentErc20Gateway,
+        parentGatewayRouter: novaNetwork.tokenBridge && novaNetwork.tokenBridge.parentGatewayRouter,
+        childCustomGateway: novaNetwork.tokenBridge && novaNetwork.tokenBridge.childCustomGateway,
+        childErc20Gateway: novaNetwork.tokenBridge && novaNetwork.tokenBridge.childErc20Gateway,
+        childGatewayRouter: novaNetwork.tokenBridge && novaNetwork.tokenBridge.childGatewayRouter,
       });
     } catch (error) {
       console.error('Failed to get core Arbitrum chains:', error);
@@ -168,7 +168,7 @@ export class ChainLookupService {
       this.chainsData = [...coreChains, ...orbitChains];
       
       this.lastFetched = Date.now();
-      console.error(`Loaded ${this.chainsData.length} chains (${coreChains.length} core + ${orbitChains.length} orbit: ${data.mainnet?.length || 0} mainnet, ${data.testnet?.length || 0} testnet)`);
+      console.error(`Loaded ${this.chainsData.length} chains (${coreChains.length} core + ${orbitChains.length} orbit: ${(data.mainnet && data.mainnet.length) || 0} mainnet, ${(data.testnet && data.testnet.length) || 0} testnet)`);
     } catch (error) {
       console.error('Failed to fetch chains data:', error);
       throw new Error('Unable to fetch chains data');
@@ -194,7 +194,7 @@ export class ChainLookupService {
     if (!chain) {
       // Try slug match
       chain = this.chainsData.find(chain => 
-        chain.slug?.toLowerCase() === searchName
+        chain.slug && chain.slug.toLowerCase() === searchName
       );
     }
     
@@ -233,7 +233,7 @@ export class ChainLookupService {
     
     return this.chainsData.filter(chain => 
       chain.name.toLowerCase().includes(searchQuery) ||
-      chain.slug?.toLowerCase().includes(searchQuery) ||
+      (chain.slug && chain.slug.toLowerCase().includes(searchQuery)) ||
       chain.chainId.toString() === searchQuery
     );
   }

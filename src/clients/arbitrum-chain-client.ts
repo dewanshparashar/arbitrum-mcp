@@ -215,16 +215,16 @@ export class ArbitrumChainClient {
       ]);
 
       const latestCreatedAssertion = createdLogs.length > 0 
-        ? createdLogs[createdLogs.length - 1].args?.nodeNum || null
+        ? (createdLogs[createdLogs.length - 1].args && createdLogs[createdLogs.length - 1].args.nodeNum) || null
         : null;
 
       const latestConfirmedAssertion = confirmedLogs.length > 0 
-        ? confirmedLogs[confirmedLogs.length - 1].args?.nodeNum || null
+        ? (confirmedLogs[confirmedLogs.length - 1].args && confirmedLogs[confirmedLogs.length - 1].args.nodeNum) || null
         : null;
 
       const creationConfirmationGap = (latestCreatedAssertion && latestConfirmedAssertion) 
         ? latestCreatedAssertion - latestConfirmedAssertion 
-        : 0n;
+        : BigInt(0);
 
       const summary = `Latest created assertion: ${latestCreatedAssertion || 'None'}, Latest confirmed: ${latestConfirmedAssertion || 'None'}. Gap: ${creationConfirmationGap}`;
 

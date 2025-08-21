@@ -92,3 +92,6 @@ Thumbs.db
 # Temporary folders
 tmp/
 temp/
+
+# NPM package tarballs
+*.tgz

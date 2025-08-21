@@ -1,21 +1,37 @@
 # Arbitrum MCP Server Usage Guide
 
-## Docker Configuration Examples
+**Requirements:** Node.js 12.0.0 or higher (Node.js 18.x LTS recommended for Claude Desktop)
+
+## NPX Configuration Examples
 
 ### Claude Desktop Configuration
 
 Add this to your Claude Desktop `claude_desktop_config.json`:
 
+**Option 1: Using npx (automatic Node.js detection)**
 ```json
 {
   "mcpServers": {
     "arbitrum-mcp": {
-      "command": "docker",
-      "args": ["run", "-i", "--rm", "arbitrum-mcp"]
+      "command": "npx",
+      "args": ["arbitrum-mcp"]
     }
   }
 }
 ```
+
+**Option 2: Using specific Node.js version (recommended for stability)**
+```json
+{
+  "mcpServers": {
+    "arbitrum-mcp": {
+      "command": "/Users/yourusername/.nvm/versions/node/v18.20.4/bin/npx",
+      "args": ["arbitrum-mcp"]
+    }
+  }
+}
+```
+*Replace the path with your actual Node.js 18+ installation path*
 
 ### Cline/Claude Code Configuration
 
@@ -25,8 +41,8 @@ Add this to your Cline configuration:
 {
   "mcpServers": {
     "arbitrum-mcp": {
-      "command": "docker", 
-      "args": ["run", "-i", "--rm", "arbitrum-mcp"]
+      "command": "npx", 
+      "args": ["arbitrum-mcp"]
     }
   }
 }
@@ -40,7 +56,7 @@ Add this to your Continue configuration:
 {
   "mcp": {
     "arbitrum-mcp": {
-      "command": ["docker", "run", "-i", "--rm", "arbitrum-mcp"]
+      "command": ["npx", "arbitrum-mcp"]
     }
   }
 }
@@ -105,27 +121,40 @@ The MCP server responds well to natural language queries:
 
 ## Troubleshooting
 
-### Docker Issues
+### NPM Package Issues
 
-**Container not responding:**
+**Node.js version error:**
 ```bash
-# Test Docker container manually
-echo '{"jsonrpc": "2.0", "id": 1, "method": "tools/list", "params": {}}' | docker run -i --rm arbitrum-mcp
+# Check your Node.js version
+node --version
+
+# Upgrade to Node.js 18 LTS (recommended) if needed
+# Using nvm:
+nvm install 18
+nvm use 18
+
+# For Claude Desktop, make sure to use Node.js 18+ in your MCP configuration
+```
+
+**Package not found:**
+```bash
+# Clear npm cache and try again
+npm cache clean --force
+npx arbitrum-mcp
 ```
 
 **Rebuild if needed:**
 ```bash
 npm run build
-npm run docker:build
 ```
 
 ### MCP Client Issues
 
 **Check MCP client logs** for connection errors or tool execution failures.
 
-**Verify Docker is running** and the image exists:
+**Verify npx can find the package:**
 ```bash
-docker images | grep arbitrum-mcp
+npx --yes arbitrum-mcp --help
 ```
 
 ### Chain-Specific Issues
@@ -156,4 +185,4 @@ batch_posting_status \
   --bridgeAddress "0x7dd8A76bdAeBE3BBBaCD7Aa87f1D4FDa1E60f94f"
 ```
 
-This setup provides maximum compatibility and ease of use across different MCP clients and operating systems.
+This NPX-based setup provides maximum compatibility and ease of use across different MCP clients and operating systems without requiring any containerization.

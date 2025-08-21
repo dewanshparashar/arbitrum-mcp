@@ -98,6 +98,8 @@ gas_status --chainName "Nova"
 
 ## Setup & Installation
 
+**Requirements:** Node.js 12.0.0 or higher (Node.js 18.x LTS recommended for Claude Desktop)
+
 ### NPX (Recommended)
 
 The easiest way to run the MCP server - no installation required:

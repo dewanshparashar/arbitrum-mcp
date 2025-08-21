@@ -785,11 +785,11 @@ class ArbitrumMCPServer {
             }
 
             const parentRpcUrl = args.parentRpcUrl as string || 
-              (chainInfo?.parentChainId === 1 ? "https://eth.llamarpc.com" : "https://arb1.arbitrum.io/rpc");
-            const sequencerInboxAddress = args.sequencerInboxAddress as string || chainInfo?.ethBridge?.sequencerInbox || "";
-            const bridgeAddress = args.bridgeAddress as string || chainInfo?.ethBridge?.bridge || "";
-            const rollupAddress = args.rollupAddress as string || chainInfo?.ethBridge?.rollup || "";
-            const chainName = args.chainName as string || chainInfo?.name || "Unknown Chain";
+              (chainInfo && chainInfo.parentChainId === 1 ? "https://eth.llamarpc.com" : "https://arb1.arbitrum.io/rpc");
+            const sequencerInboxAddress = args.sequencerInboxAddress as string || (chainInfo && chainInfo.ethBridge && chainInfo.ethBridge.sequencerInbox) || "";
+            const bridgeAddress = args.bridgeAddress as string || (chainInfo && chainInfo.ethBridge && chainInfo.ethBridge.bridge) || "";
+            const rollupAddress = args.rollupAddress as string || (chainInfo && chainInfo.ethBridge && chainInfo.ethBridge.rollup) || "";
+            const chainName = args.chainName as string || (chainInfo && chainInfo.name) || "Unknown Chain";
 
             const status = await chainDataClient.getComprehensiveChainStatus(
               chainName,
