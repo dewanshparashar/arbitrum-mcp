@@ -4,19 +4,20 @@
   "description": "MCP server for interfacing with the Arbitrum system (nodes, chains, accounts, ecosystem) in natural language",
   "main": "dist/index.js",
   "bin": {
-    "arbitrum-mcp": "dist/index.js"
+    "arbitrum-mcp": "./dist/index.js"
   },
+  "files": [
+    "dist/**/*",
+    "README.md",
+    "package.json"
+  ],
   "type": "module",
   "scripts": {
     "build": "tsc",
     "dev": "tsc --watch",
     "start": "node dist/index.js",
     "test": "jest",
-    "docker:build": "docker build -t arbitrum-mcp .",
-    "docker:run": "docker run -it --rm arbitrum-mcp",
-    "docker:compose": "docker-compose up",
-    "docker:compose:build": "docker-compose up --build",
-    "docker:compose:down": "docker-compose down"
+    "prepublishOnly": "npm run build"
   },
   "dependencies": {
     "@arbitrum/orbit-sdk": "^0.23.5",

@@ -2,7 +2,7 @@
 
 [![CI](https://github.com/dewanshparashar/arbitrum-mcp/workflows/CI/badge.svg)](https://github.com/dewanshparashar/arbitrum-mcp/actions)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Docker](https://img.shields.io/badge/docker-%230db7ed.svg?style=flat&logo=docker&logoColor=white)](https://hub.docker.com)
+[![npm version](https://img.shields.io/npm/v/arbitrum-mcp.svg)](https://www.npmjs.com/package/arbitrum-mcp)
 [![TypeScript](https://img.shields.io/badge/typescript-%23007ACC.svg?style=flat&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
 
 A Model Context Protocol (MCP) server for interfacing with Arbitrum Nitro nodes and chains in natural language. Monitor chain health, batch posting, assertions, and gas prices across all Arbitrum networks including core chains (Arbitrum One, Nova) and Orbit chains.
@@ -98,13 +98,13 @@ gas_status --chainName "Nova"
 
 ## Setup & Installation
 
-### Docker (Recommended)
+### NPX (Recommended)
 
-The easiest way to run the MCP server with maximum client compatibility:
+The easiest way to run the MCP server - no installation required:
 
 ```bash
-# Run directly from Docker Hub (no build required!)
-docker run -i --rm dewanshparashar/arbitrum-mcp
+# Run directly with npx (no build required!)
+npx arbitrum-mcp
 ```
 
 ### Direct Node.js
@@ -130,8 +130,8 @@ Add to your Claude Desktop configuration:
 {
   "mcpServers": {
     "arbitrum-mcp": {
-      "command": "docker",
-      "args": ["run", "-i", "--rm", "dewanshparashar/arbitrum-mcp"]
+      "command": "npx",
+      "args": ["arbitrum-mcp"]
     }
   }
 }
@@ -143,8 +143,8 @@ Add to your Claude Desktop configuration:
 {
   "mcpServers": {
     "arbitrum-mcp": {
-      "command": "docker",
-      "args": ["run", "-i", "--rm", "dewanshparashar/arbitrum-mcp"]
+      "command": "npx",
+      "args": ["arbitrum-mcp"]
     }
   }
 }
@@ -166,11 +166,6 @@ npm test
 npm run dev
 ```
 
-## Docker
-
-See [DOCKER.md](DOCKER.md) for detailed Docker setup instructions.
-
-**⚠️ Important:** When using Docker containers to connect to local testnodes, use `http://host.docker.internal:8547` instead of `http://127.0.0.1:8547` for the RPC URL.
 
 ## Technology Stack
 
@@ -178,7 +173,7 @@ See [DOCKER.md](DOCKER.md) for detailed Docker setup instructions.
 - **Viem** - Ethereum client for blockchain interactions
 - **@arbitrum/sdk** - Official Arbitrum SDK for core chain data
 - **MCP SDK** - Model Context Protocol implementation
-- **Docker** - Containerized deployment
+- **NPM** - Package distribution
 
 ## Contributing
 
